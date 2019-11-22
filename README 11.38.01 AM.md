@@ -13,7 +13,7 @@ Objection - This is an orm (object relational mapper) api. It allows you to make
 Knex - This is a database migration tool. It will create database schemas and populate the tables with seed data.
 
 Mustache - This is a logic-less templating engine for html. Basically just allows you to inject the value of a variable into html.
- 
+
 Mocha - This is the testing library used for this project.
 
 Chai -  This is the assertion library used for this project. This is the library you will be using to make assertions in your test cases.

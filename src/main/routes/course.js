@@ -98,7 +98,7 @@ const course_manage_page = async (res, course_id) => {
 									{
 										metric: 4,
 										value: 6
-									}
+									},
 									{
 										metric: 5,
 										value: 6

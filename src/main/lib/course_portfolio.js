@@ -59,3 +59,21 @@ module.exports.get = async (portfolio_id) => {
 
 	return portfolio
 }
+/*
+const Courses = require('../models/Course')
+
+const showCoursePortfolio = (professorName) => {
+	//tries to pull courses from database given a professor name/PID
+	const courses = await Courses.query()
+		.findById(professorName)
+
+		if (courses) {
+            return true;
+        }
+        else {
+            return false;
+        }
+	
+}
+*/
+

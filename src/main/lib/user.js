@@ -17,3 +17,16 @@ const is_whitelisted = async (linkblue_username) => {
 }
 
 module.exports.is_whitelisted = is_whitelisted
+/*
+const create_User = async (user_imput) => {
+    await knex('users').insert([
+		{
+			id: 2,
+			linkblue_username: user_imput
+		}
+    ])
+    return 'done';
+}
+
+module.exports.create_User = create_User
+*/

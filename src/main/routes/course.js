@@ -6,42 +6,75 @@ var router = express.Router();
 
 const Department = require('../models/Department')
 const TermType = require('../models/TermType')
+const StudentLearningOutcomeMetric = require('../models/StudentLearningOutcome/Metric')
+const Artifact = require('../models/CoursePortfolio/Artifact/index')
+
+const course_artifact_info = async (res, req) => {
+	const artifact_num = await Artifact.query()
+
+
+	// Counts the number of artifacts
+	num_artifacts = artifact_num.length
+
+	let course_artifact = {
+		num: num_artifacts
+	};
+
+	res.render('base_template', {
+		title: 'CS498 Course Portfolio',
+		body: mustache.render('course/index', course_artifact)
+	})
+}
+
 
 const course_manage_page = async (res, course_id) => {
+	const slo1 = await StudentLearningOutcomeMetric.query().findById(1)
+	const slo2 = await StudentLearningOutcomeMetric.query().findById(2)
+	const slo3 = await StudentLearningOutcomeMetric.query().findById(3)
+	const slo4 = await StudentLearningOutcomeMetric.query().findById(4)
+	const slo5 = await StudentLearningOutcomeMetric.query().findById(5)
+
 	let course_info = {
 		student_learning_outcomes: [
 			{
 				index: 1,
-				description: 'n/a',
+				description: course_id,
 				metrics: [
 					{
-						name: 'n/a',
-						exceeds: 'n/a',
-						meets: 'n/a',
-						partially: 'n/a',
-						not: 'n/a'
+						name: slo1.name,
+						exceeds: slo1.exceeds,
+						meets: slo1.meets,
+						partially: slo1.partially,
+						not: slo1.not
 					},
 					{
-						name: 'n/a',
-						exceeds: 'n/a',
-						meets: 'n/a',
-						partially: 'n/a',
-						not: 'n/a'
+						name: slo2.name,
+						exceeds: slo2.exceeds,
+						meets: slo2.meets,
+						partially: slo2.partially,
+						not: slo2.not
 					},
 					{
-						name: 'n/a',
-						exceeds: 'n/a',
-						meets: 'n/a',
-						partially: 'n/a',
-						not: 'n/a'
+						name: slo3.name,
+						exceeds: slo3.exceeds,
+						meets: slo3.meets,
+						partially: slo3.partially,
+						not: slo3.not
 					},
 					{
-						name: 'n/a',
-						exceeds: 'n/a',
-						meets: 'n/a',
-						partially: 'n/a',
-						not: 'n/a'
+						name: slo4.name,
+						exceeds: slo4.exceeds,
+						meets: slo4.meets,
+						partially: slo4.partially,
+						not: slo4.not
 					},
+					{
+						name: slo5.name,
+						exceeds: slo5.exceeds,
+						meets: slo5.meets,
+						partially: slo5.partially,
+						not: slo5.not
+					}
 				],
 				artifacts: [
 					{
@@ -66,6 +99,10 @@ const course_manage_page = async (res, course_id) => {
 										metric: 4,
 										value: 6
 									}
+									{
+										metric: 5,
+										value: 6
+									}
 								]
 							}
 						]
@@ -86,7 +123,7 @@ const course_new_page = async (res, department = false) => {
 	const semesters = await (await TermType.query()
 		.findById('semester'))
 		.$relatedQuery('terms')
-	let student_learning_outcomes = false
+	let student_learning_outcomes = true
 
 	if (department) {
 		student_learning_outcomes = await (await Department.query().findById(department))
@@ -104,7 +141,13 @@ const course_new_page = async (res, department = false) => {
 	})
 }
 
-/* GET course home page */
+
+router.route('/')
+	.get(html.auth_wrapper(async (req, res, next) => {
+		await course_artifact_info(res, req)
+	}))
+
+/* GET course home page 
 router.route('/')
 	.get(html.auth_wrapper(async (req, res, next) => {
 		res.render('base_template', {
@@ -112,6 +155,7 @@ router.route('/')
 			body: mustache.render('course/index')
 		})
 	}))
+*/
 
 /* GET course page */
 router.route('/:id')
